@@ -17,6 +17,15 @@ int main(int argc, char *argv[])
         die("This script requires one argument as string of text.\n");
     } else {
         char *input = argv[1];
-        printf("ROT13: %s\n", rot13(input));
+        char *a = malloc(strlen(input)+1);
+        
+        strcpy(a, input);
+        printf("ROT13: %s\n", rot13(a));
+        
+        strcpy(a, input);
+        printf("ROT47: %s\n", rot47(a));
+        
+        free(a);
     }
+    return 0;
 }
