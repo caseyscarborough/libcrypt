@@ -6,5 +6,6 @@
 #include <string.h>
 
 char *rot13(char *str);
+char *rot47(char *str);
 
 #endif
