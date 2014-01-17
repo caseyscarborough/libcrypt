@@ -17,14 +17,12 @@ int main(int argc, char *argv[])
         die("This script requires one argument as string of text.\n");
     } else {
         char *input = argv[1];
-        char *a = malloc(strlen(input)+1);
         
-        strcpy(a, input);
-        printf("ROT13: %s\n", rot13(a));
-        
-        strcpy(a, input);
-        printf("ROT47: %s\n", rot47(a));
-        free(a);
+        char *rot13_encoded_input = rot13(input);
+        char *rot47_encoded_input = rot47(input);
+
+        printf("ROT13: %s\n", rot13_encoded_input);
+        printf("ROT47: %s\n", rot47_encoded_input);
 
         char *name = "This is a test string to be encoded and decoded.";
         
@@ -37,8 +35,11 @@ int main(int argc, char *argv[])
         printf("Encoded Data: %s\n", base64_encoded_name);
         printf("Decoded Data: %s\n", base64_decoded_name);
 
+        free(rot13_encoded_input);
+        free(rot47_encoded_input);
         free(base64_encoded_name);
         free(base64_decoded_name);
+        
         base64_cleanup();
     }
     return 0;
