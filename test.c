@@ -18,7 +18,6 @@ int main(int argc, char *argv[])
     free(rot47_encoded_input);
     free(base64_encoded_name);
     free(base64_decoded_name);
-    base64_cleanup();
 
     return 0;
 }

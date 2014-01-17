@@ -146,5 +146,6 @@ unsigned char *base64_decode(const char *data)
         if (j < output_length) decoded_data[j++] = (triple >> 1 * 8) & 0xFF;
         if (j < output_length) decoded_data[j++] = (triple >> 0 * 8) & 0xFF;
     }
+    base64_cleanup();
     return decoded_data;
 }
