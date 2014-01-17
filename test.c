@@ -1,5 +1,4 @@
 #include "crypt.h"
-#include <errno.h>
 
 int main(int argc, char *argv[])
 {
@@ -20,6 +19,6 @@ int main(int argc, char *argv[])
     free(base64_encoded_name);
     free(base64_decoded_name);
     base64_cleanup();
-    
+
     return 0;
 }

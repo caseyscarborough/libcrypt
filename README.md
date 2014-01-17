@@ -57,3 +57,7 @@ printf("%s\n", base64_decoded_text);
 
 free(base64_decoded_text);
 ```
+
+## Using the Library
+
+To use the library, include the `crypt.h` and `crypt.c` files in your project. Then, include the `crypt.h` file at the top of each file you'd like to use it's methods in. See `test.c` for example usage.
