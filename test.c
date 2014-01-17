@@ -24,13 +24,10 @@ int main(int argc, char *argv[])
         printf("ROT13: %s\n", rot13_encoded_input);
         printf("ROT47: %s\n", rot47_encoded_input);
 
-        char *name = "This is a test string to be encoded and decoded.";
-        
-        size_t input_len = strlen((const char *)name);
-        size_t output_len = (size_t)(input_len * 4 / 3);
-        
-        char * base64_encoded_name = base64_encode((const unsigned char *) name, input_len, &output_len);
-        unsigned char * base64_decoded_name = base64_decode(base64_encoded_name, output_len, &input_len);
+        char *text = "The Quick Brown Fox Jumps Over The Lazy Dog.";
+                
+        char * base64_encoded_name = base64_encode((const unsigned char *) text);
+        unsigned char * base64_decoded_name = base64_decode(base64_encoded_name);
         
         printf("Encoded Data: %s\n", base64_encoded_name);
         printf("Decoded Data: %s\n", base64_decoded_name);
@@ -39,7 +36,7 @@ int main(int argc, char *argv[])
         free(rot47_encoded_input);
         free(base64_encoded_name);
         free(base64_decoded_name);
-        
+
         base64_cleanup();
     }
     return 0;

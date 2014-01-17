@@ -33,10 +33,12 @@ void base64_init()
         decoding_table[(unsigned char) encoding_table[i]] = i;
 }
 
-char *base64_encode(const unsigned char *data, size_t input_length, size_t *output_length)
+char *base64_encode(const unsigned char *data)
 {
-    *output_length = 4 * ((input_length + 2) / 3);
-    char *encoded_data = malloc(*output_length);
+    size_t input_length = strlen((const char *)data);
+    size_t output_length = 4 * ((input_length + 2) / 3);
+
+    char *encoded_data = malloc(output_length);
     if (encoded_data == NULL) return NULL;
 
     for (int i = 0, j = 0; i < input_length;) {
@@ -53,22 +55,23 @@ char *base64_encode(const unsigned char *data, size_t input_length, size_t *outp
     }
 
     for (int i = 0; i < mod_table[input_length % 3]; i++)
-        encoded_data[*output_length - 1 - i] = '=';
+        encoded_data[output_length - 1 - i] = '=';
 
     return encoded_data;
 }
 
 
-unsigned char *base64_decode(const char *data, size_t input_length, size_t *output_length)
+unsigned char *base64_decode(const char *data)
 {
+    size_t input_length = strlen(data);
+    size_t output_length = (size_t)(input_length / 4 * 3);
+
     if (decoding_table == NULL) base64_init();
     if (input_length % 4 != 0) return NULL;
+    if (data[input_length - 1] == '=') (output_length)--;
+    if (data[input_length - 2] == '=') (output_length)--;
 
-    *output_length = input_length / 4 * 3;
-    if (data[input_length - 1] == '=') (*output_length)--;
-    if (data[input_length - 2] == '=') (*output_length)--;
-
-    unsigned char *decoded_data = malloc(*output_length);
+    unsigned char *decoded_data = malloc(output_length);
     if (decoded_data == NULL) return NULL;
 
     for (int i = 0, j = 0; i < input_length;) {
@@ -82,9 +85,9 @@ unsigned char *base64_decode(const char *data, size_t input_length, size_t *outp
         + (sextet_c << 1 * 6)
         + (sextet_d << 0 * 6);
 
-        if (j < *output_length) decoded_data[j++] = (triple >> 2 * 8) & 0xFF;
-        if (j < *output_length) decoded_data[j++] = (triple >> 1 * 8) & 0xFF;
-        if (j < *output_length) decoded_data[j++] = (triple >> 0 * 8) & 0xFF;
+        if (j < output_length) decoded_data[j++] = (triple >> 2 * 8) & 0xFF;
+        if (j < output_length) decoded_data[j++] = (triple >> 1 * 8) & 0xFF;
+        if (j < output_length) decoded_data[j++] = (triple >> 0 * 8) & 0xFF;
     }
     return decoded_data;
 }

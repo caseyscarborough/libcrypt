@@ -26,8 +26,8 @@ char *rot47(char *str);
 
 void convert_to_binary(int num);
 void build_decoding_table();
-char *base64_encode(const unsigned char *data, size_t input_length, size_t *output_length);
-unsigned char *base64_decode(const char *data, size_t input_length, size_t *output_length);
+char *base64_encode(const unsigned char *data);
+unsigned char *base64_decode(const char *data);
 void base64_cleanup();
 
 #endif
