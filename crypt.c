@@ -22,7 +22,7 @@ char *rot47(char *s)
     return s;
 }
 
-void build_decoding_table()
+void base64_init()
 {
     decoding_table = malloc(256);
     for (int i = 0; i < 64; i++)
@@ -50,13 +50,14 @@ char *base64_encode(const unsigned char *data, size_t input_length, size_t *outp
 
     for (int i = 0; i < mod_table[input_length % 3]; i++)
         encoded_data[*output_length - 1 - i] = '=';
+
     return encoded_data;
 }
 
 
 unsigned char *base64_decode(const char *data, size_t input_length, size_t *output_length)
 {
-    if (decoding_table == NULL) build_decoding_table();
+    if (decoding_table == NULL) base64_init();
     if (input_length % 4 != 0) return NULL;
 
     *output_length = input_length / 4 * 3;
