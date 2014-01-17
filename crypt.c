@@ -1,5 +1,16 @@
 #include "crypt.h"
 
+/*
+ * This method returns a newly allocated 'string' that is encoded
+ * using the ROT13 cipher. It is up to the user to free the memory 
+ * from the data returned from this method (shown below).
+ *
+ * Example:
+ *   char *text = "This is sample text.";
+ *   char *rot13_text = rot13(text);
+ *   printf("%s\n", rot13_text);
+ *   free(rot13_text);
+ */
 char *rot13(char *a)
 {
     char *s = malloc(strlen(a) + 1);
@@ -13,6 +24,17 @@ char *rot13(char *a)
     return s;
 }
 
+/*
+ * This method returns a newly allocated 'string' that is encoded
+ * using the ROT13 cipher. It is up to the user to free the memory 
+ * from the data returned from this method (shown below).
+ *
+ * Example:
+ *   char *text = "This is sample text.";
+ *   char *rot47_text = rot47(text);
+ *   printf("%s\n", rot47_text);
+ *   free(rot47_text);
+ */
 char *rot47(char *a)
 {
     char *s = malloc(strlen(a) + 1);
@@ -26,6 +48,10 @@ char *rot47(char *a)
     return s;
 }
 
+/*
+ * This method initializes the decoding table that is needed for
+ * the base64_decode method.
+ */
 void base64_init()
 {
     decoding_table = malloc(256);
@@ -33,6 +59,26 @@ void base64_init()
         decoding_table[(unsigned char) encoding_table[i]] = i;
 }
 
+/*
+ * This method frees the memory initialized in base64_init.
+ */
+void base64_cleanup()
+{
+    free(decoding_table);
+}
+
+/*
+ * This method takes in a string and returns the string encoded
+ * into the Base64 encoding scheme. It is up to the user of this
+ * method to free the memory returned from it. (shown below)
+ *
+ * Example:
+ *   char *text = "The Quick Brown Fox Jumps Over The Lazy Dog.";
+ *   char *base64_encoded_text = base64_encode(text);
+ *   printf("%s\n", base64_encoded_text);
+ *   // Outputs: VGhlIFF1aWNrIEJyb3duIEZveCBKdW1wcyBPdmVyIFRoZSBMYXp5IERvZy4=
+ *   free(base64_encoded_text);
+ */
 char *base64_encode(const unsigned char *data)
 {
     size_t input_length = strlen((const char *)data);
@@ -60,7 +106,18 @@ char *base64_encode(const unsigned char *data)
     return encoded_data;
 }
 
-
+/*
+ * This method takes in a string of Base64 encoded data and returns the
+ * decoded version of it. It is up to the user of this method to free
+ * the memory returned from it. (shown below)
+ *
+ * Example:
+ *   char *text = "VGhpcyBpcyBzb21lIGR1bW15IHRleHQgdG8gYmUgZW5jb2RlZCBhbmQgZGVjb2RlZC4=";
+ *   char *base64_decoded_text = base64_decode(text);
+ *   printf("%s\n", base64_decoded_text);
+ *   // Outputs: This is some dummy text to be encoded and decoded.
+ *   free(base64_decoded_text);
+ */
 unsigned char *base64_decode(const char *data)
 {
     size_t input_length = strlen(data);
@@ -90,9 +147,4 @@ unsigned char *base64_decode(const char *data)
         if (j < output_length) decoded_data[j++] = (triple >> 0 * 8) & 0xFF;
     }
     return decoded_data;
-}
-
-void base64_cleanup()
-{
-    free(decoding_table);
 }
