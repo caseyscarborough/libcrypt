@@ -54,11 +54,7 @@
 
 void die(char *error)
 {
-    if (errno) {
-        printf("%d\n", errno);
-    } else {
-        printf("%s\n", error);
-    }
+    printf("%s\n", error);
     exit(1);
 }
 
@@ -79,26 +75,28 @@ int main(int argc, char **argv)
         print_usage_menu();
     } else if (argc != 4) {
         print_usage_menu();
-    } else {
+    } else if (strncmp(argv[1], "-d", 2) == 0 || strncmp(argv[1], "-e", 2) == 0) {
         char *input_filename = argv[2];
         char *output_filename = argv[3];
+        int i;
+
+        input_file = fopen(argv[2], "r");
+        if (input_file == NULL) {
+            die("ERROR: Could not open input file");
+        }
+
+        output_file = fopen(argv[3], "w");
+        if (output_file == NULL) {
+            die("ERROR: Could not open output file");
+        }
+
         if (strncmp(argv[1], "-d", 2) == 0) {
             printf("Decoding %s into %s...\n", input_filename, output_filename);
-            input_file = fopen(argv[2], "r");
-            output_file = fopen(argv[3], "w");
-     
-            if (input_file == NULL) {
-                die("ERROR: Could not open input file");
-            } else if (output_file == NULL) {
-                die("ERROR: Could not open output file");
-            }
 
             char word[5];
             while (feof(input_file) == 0) {
-                int i;
-                for (i = 0; i < 4 && feof(input_file) == 0; i++){
+                for (i = 0; i < 4; i++)
                     word[i] = getc(input_file);
-                }
                 word[i] = '\0';
 
                 if (feof(input_file) == 0) {
@@ -109,21 +107,11 @@ int main(int argc, char **argv)
             }
         } else if (strncmp(argv[1], "-e", 2) == 0) {
             printf("Encoding %s into %s...\n", input_filename, output_filename);
-            input_file = fopen(argv[2], "r");
-            output_file = fopen(argv[3], "w");
-     
-            if (input_file == NULL) {
-                die("ERROR: Could not open input file");
-            } else if (output_file == NULL) {
-                die("ERROR: Could not open output file");
-            }
 
             char word[4];
             while (feof(input_file) == 0) {
-                int i;
-                for (i = 0; i < 3 && feof(input_file) == 0; i++){
+                for (i = 0; i < 3; i++)
                     word[i] = getc(input_file);
-                }
                 word[i] = '\0';
 
                 if (feof(input_file) == 0) {
@@ -133,5 +121,8 @@ int main(int argc, char **argv)
                 }
             }
         }
+    } else {
+        printf("Incorrect option '%s'\n", argv[1]);
+        print_usage_menu();
     }
 }
