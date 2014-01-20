@@ -1,7 +1,7 @@
 /**
  * Base64 Converter
  *
- * Copyright 2013 (c) Casey Scarborough
+ * Copyright 2014 (c) Casey Scarborough
  * https://github.com/caseyscarborough/libcrypt
  *
  * Description:
