@@ -16,5 +16,7 @@ char *rot47(const char *str);
 
 char *base64_encode(const char *data);
 char *base64_decode(const char *data);
+void base64_decoding_table_init();
+void base64_decoding_table_cleanup();
 
 #endif
