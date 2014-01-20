@@ -81,7 +81,6 @@ char *base64_encode(const char *input)
 
     for (int i = 0; i < mod_table[input_length % 3]; i++)
         encoded_data[output_length - 1 - i] = '=';
-
     return encoded_data;
 }
 
@@ -100,8 +99,9 @@ char *base64_encode(const char *input)
 char *base64_decode(const char *input)
 {
     size_t input_length = strlen(input);
-    size_t output_length = (size_t)(input_length / 4 * 3);
+
     if (input_length % 4 != 0) return NULL;
+    size_t output_length = (size_t)(input_length / 4 * 3);
 
     base64_decoding_table_init();
     if (input[input_length - 1] == '=') (output_length)--;
