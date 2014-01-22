@@ -76,10 +76,10 @@ char *base64_encode(const char *input)
         uint32_t triple = (octet_a << 0x10) + (octet_b << 0x08) + octet_c;
 
         for (int i = 3; i >= 0; i--)
-            encoded_data[j++] = encoding_table[(triple >> i * 6) & 0x3F];
+            encoded_data[j++] = base64_encoding_table[(triple >> i * 6) & 0x3F];
     }
 
-    for (int i = 0; i < mod_table[input_length % 3]; i++)
+    for (int i = 0; i < base64_mod_table[input_length % 3]; i++)
         encoded_data[output_length - 1 - i] = '=';
     return encoded_data;
 }
@@ -111,10 +111,10 @@ char *base64_decode(const char *input)
     if (decoded_data == NULL) return NULL;
 
     for (int i = 0, j = 0; i < input_length;) {
-        uint32_t sextet_a = input[i] == '=' ? 0 & i++ : decoding_table[input[i++]];
-        uint32_t sextet_b = input[i] == '=' ? 0 & i++ : decoding_table[input[i++]];
-        uint32_t sextet_c = input[i] == '=' ? 0 & i++ : decoding_table[input[i++]];
-        uint32_t sextet_d = input[i] == '=' ? 0 & i++ : decoding_table[input[i++]];
+        uint32_t sextet_a = input[i] == '=' ? 0 & i++ : base64_decoding_table[input[i++]];
+        uint32_t sextet_b = input[i] == '=' ? 0 & i++ : base64_decoding_table[input[i++]];
+        uint32_t sextet_c = input[i] == '=' ? 0 & i++ : base64_decoding_table[input[i++]];
+        uint32_t sextet_d = input[i] == '=' ? 0 & i++ : base64_decoding_table[input[i++]];
         uint32_t triple = (sextet_a << 0x12) + (sextet_b << 0x0C) + (sextet_c << 0x06) + sextet_d;
 
         if (j < output_length) decoded_data[j++] = (triple >> 0x10) & 0xFF;
@@ -132,10 +132,10 @@ char *base64_decode(const char *input)
  */
 void base64_decoding_table_init()
 {
-    if (decoding_table == NULL) {
-        decoding_table = malloc(123);
+    if (base64_decoding_table == NULL) {
+        base64_decoding_table = malloc(123);
         for (int i = 0; i < 64; i++) {
-            decoding_table[encoding_table[i]] = i;
+            base64_decoding_table[base64_encoding_table[i]] = i;
         }
     }
 }
@@ -146,6 +146,130 @@ void base64_decoding_table_init()
  */
 void base64_decoding_table_cleanup()
 {
-    free(decoding_table);
-    decoding_table = NULL;
+    free(base64_decoding_table);
+    base64_decoding_table = NULL;
+}
+
+/**
+ * This method takes in a string of user input and returns the
+ * MD5 hash of the input as a newly allocated character array.
+ * It is up to the caller of this method to free the allocated
+ * memory.
+ *
+ * Example:
+ *   char *text = "The quick brown fox jumps over the lazy dog.";
+ *   char *md5_text = md5(text);
+ *   printf("%s\n", md5_text);
+ *   // Outputs e4d909c290d0fb1ca068ffaddf22cbd0
+ *   free(md5_text);
+ */
+char *md5(char *input)
+{
+    size_t padded_length, offset;
+ 
+    // Get the initial input length
+    size_t initial_length = strlen(input);
+
+    // Allocate space for the result
+    uint8_t *result = (uint8_t *) malloc(16);
+
+    // Set the length of the padding until length % 512 == 448
+    for (padded_length = initial_length + 1; (padded_length) % (512/8) != (448/8); padded_length++);
+    
+    // Allocate memory for the message to be evaluated
+    uint8_t *message = (uint8_t *) malloc(padded_length + 8);
+    memcpy(message, input, initial_length);
+    
+    // Set the '1' after the initial message
+    message[initial_length] = 0x80;
+    
+    // Fill the rest of the padding with zeros
+    for(offset = initial_length + 1; offset < padded_length; offset++)
+        message[offset] = 0;
+
+    // Set the remaining 64 bits to hold the length of the initial input
+    md5_to_bytes(initial_length << 0x03, message + padded_length);
+    md5_to_bytes(initial_length >> 0x1D, message + padded_length + 4);
+
+    uint32_t a, b, c, d, f, g, d_temp, w[16];
+
+    uint32_t a0 = 0x67452301;
+    uint32_t b0 = 0xefcdab89;
+    uint32_t c0 = 0x98badcfe;
+    uint32_t d0 = 0x10325476;
+
+    // Loop through each 8 bytes at a time
+    for (int i = 0; i < padded_length; i += (512/8)) {
+        a = a0, b = b0, c = c0, d = d0;
+        
+        // Break the chunks into 32-bit integers
+        for (int j = 0; j < 16; j++)
+            w[j] = md5_to_int32(message + i + j * 4);
+ 
+        // Operate on the 8 bytes, two at a time
+        // See RFC 1321 3.4
+        for(int j = 0; j < 64; j++) {
+            if (j < 16) {
+                f = (b & c) | ((~b) & d);
+                g = j;
+            } else if (j < 32) {
+                f = (d & b) | ((~d) & c);
+                g = ((5 * j) + 1) % 16;
+            } else if (j < 48) {
+                f = b ^ c ^ d;
+                g = (3 * j + 5) % 16;          
+            } else if (j < 64) {
+                f = c ^ (b | (~d));
+                g = (7 * j) % 16;
+            }
+
+            d_temp = d;
+            d = c;
+            c = b;
+            b = b + MD5_LEFT_ROTATE((a + f + md5_k[j] + w[g]), md5_shift_amounts[j]);
+            a = d_temp;
+        }
+        
+        a0 += a;
+        b0 += b;
+        c0 += c;
+        d0 += d;
+    }
+
+    md5_to_bytes(a0, result);
+    md5_to_bytes(b0, result + 4);
+    md5_to_bytes(c0, result + 8);
+    md5_to_bytes(d0, result + 12);
+
+    // Get a string of the hashed result
+    char *hashed_string = md5_build_string(result);
+
+    // Free allocated memory
+    free(message);
+    free(result);
+
+    return hashed_string;
+}
+
+char *md5_build_string(uint8_t *result)
+{
+    char *output = malloc(sizeof(char) * 33);
+    char a[3];
+    for (int i = 0; i < 16; i++) {
+        sprintf(a, "%2.2x", result[i]);
+        strcat(output, a);
+    }
+    output[32] = '\0';
+    return output;
+}
+
+void md5_to_bytes(uint32_t val, uint8_t *bytes)
+{
+    for (int i = 0; i < 4; i++) bytes[i] = (uint8_t) (val >> (i * 8));
+}
+
+uint32_t md5_to_int32(const uint8_t *bytes)
+{
+    return ((uint32_t) bytes[0] << 0x00) | ((uint32_t) bytes[1] << 0x08) |
+           ((uint32_t) bytes[2] << 0x10) | ((uint32_t) bytes[3] << 0x18) ;
 }
