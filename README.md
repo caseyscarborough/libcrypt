@@ -83,3 +83,16 @@ printf("%s\n", base64_decoded_text);
 
 free(base64_decoded_text);
 ```
+
+#### md5
+
+This method hashes a given string using the [MD5](http://en.wikipedia.org/wiki/MD5) hashing algorithm.
+
+```c
+char *text = "The quick brown fox jumps over the lazy dog."
+char *md5_text = md5(text);
+printf("%s\n", md5_text);
+// Outputs: e4d909c290d0fb1ca068ffaddf22cbd0
+
+free(md5_text);
+```
