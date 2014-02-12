@@ -55,6 +55,6 @@ void base64_decoding_table_cleanup();
 void md5_to_bytes(uint32_t val, uint8_t *bytes);
 uint32_t md5_to_int32(const uint8_t *bytes);
 char *md5_build_string(uint8_t *result);
-char *md5(char *input);
+char *md5(const char *input);
 
 #endif

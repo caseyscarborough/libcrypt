@@ -5,25 +5,18 @@ BIN=bin
 TESTS=test
 UTILS=utils
 
-all: mkdir crypt.o test.o test b64.o b64
+all: mkdir test b64
 
-crypt.o: $(SRC)/crypt.c
-	$(CC) $(CFLAGS) -c $< -o $(BIN)/$@
+test: $(TESTS)/crypt-test.c
+	$(CC) $(CFLAGS) $(SRC)/crypt.c $(TESTS)/crypt-test.c -o $(TESTS)/crypt-$@ -lcheck
 
-test.o: $(TESTS)/test.c
-	$(CC) $(CFLAGS) -c $< -o $(BIN)/$@
-
-test: $(BIN)/test.o $(BIN)/crypt.o
-	$(CC) $(CFLAGS) $(BIN)/test.o $(BIN)/crypt.o -o $(BIN)/$@
-
-b64.o: $(UTILS)/b64.c
-	$(CC) $(CFLAGS) -c $< -o $(BIN)/b64.o
-
-b64: $(BIN)/b64.o $(BIN)/crypt.o
-	$(CC) $(CFLAGS) $(BIN)/b64.o $(BIN)/crypt.o -o $(BIN)/$@
+b64: $(UTILS)/b64.c
+	$(CC) $(CFLAGS) $(SRC)/crypt.c $< -o $(BIN)/$@
 
 mkdir:
 	mkdir -p $(BIN)
 
 clean:
 	rm -f $(BIN)/*
+
+.PHONY: all test clean

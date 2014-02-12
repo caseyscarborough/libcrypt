@@ -163,7 +163,7 @@ void base64_decoding_table_cleanup()
  *   // Outputs e4d909c290d0fb1ca068ffaddf22cbd0
  *   free(md5_text);
  */
-char *md5(char *input)
+char *md5(const char *input)
 {
     size_t padded_length, offset;
  
