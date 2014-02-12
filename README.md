@@ -4,7 +4,7 @@ libcrypt is a simple library used for encryption, hashing, and encoding in C. It
 
 ## Using the Library
 
-To use the library, include the [`crypt.h`](https://github.com/caseyscarborough/libcrypt/blob/master/src/crypt.h) and [`crypt.c`](https://github.com/caseyscarborough/libcrypt/blob/master/src/crypt.c) files in your project. Then, include the [`crypt.h`](https://github.com/caseyscarborough/libcrypt/blob/master/src/crypt.h) file at the top of each file you'd like to use it's methods in. See [`test.c`](https://github.com/caseyscarborough/libcrypt/blob/master/test/test.c) for example usage.
+To use the library, include the [`crypt.h`](https://github.com/caseyscarborough/libcrypt/blob/master/src/crypt.h) and [`crypt.c`](https://github.com/caseyscarborough/libcrypt/blob/master/src/crypt.c) files in your project. Then, include the [`crypt.h`](https://github.com/caseyscarborough/libcrypt/blob/master/src/crypt.h) file at the top of each file you'd like to use it's methods in. See [`test/crypt-test.c`](https://github.com/caseyscarborough/libcrypt/blob/master/test/crypt-test.c) for example usage.
 
 To run the test file or the Base64 converter, run `make` from the project directory.
 
@@ -15,6 +15,7 @@ Included in this library is a Base64 file converter utility, located in the file
 ```bash
 # Build the executables
 make
+cd bin
 
 # Encode a file
 ./b64 -e input.txt output.txt
@@ -95,4 +96,16 @@ printf("%s\n", md5_text);
 // Outputs: e4d909c290d0fb1ca068ffaddf22cbd0
 
 free(md5_text);
+```
+## Running the Tests
+
+Tests are written using the [Check](http://check.sourceforge.net/) unit testing framework. The tests are located at [`crypt-test.c`](https://github.com/caseyscarborough/libcrypt/blob/master/test/crypt-test.c), and can be compiled using `make test`. The check library [needs to be installed](http://check.sourceforge.net/web/install.html).
+
+```bash
+make test
+# gcc -Wall test/crypt-test.c -o test/crypt-test -lcheck
+
+test/crypt-test
+# Running suite(s): Core
+# 100%: Checks: 5, Failures: 0, Errors: 0
 ```
