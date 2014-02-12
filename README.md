@@ -8,25 +8,6 @@ To use the library, include the [`crypt.h`](https://github.com/caseyscarborough/
 
 To run the test file or the Base64 converter, run `make` from the project directory.
 
-### Base64 Converter
-
-Included in this library is a Base64 file converter utility, located in the file [`b64.c`](https://github.com/caseyscarborough/libcrypt/blob/master/utils/b64.c). This utility will convert the contents of a file to or from Base64 encoded data.
-
-```bash
-# Build the executables
-make
-cd bin
-
-# Encode a file
-./b64 -e input.txt output.txt
-
-# Decode a file
-./b64 -e encoded.txt decoded.txt
-
-# Print the help menu
-./b64 -h
-```
-
 ## Methods
 
 The following methods are available in the [libcrypt](https://github.com/caseyscarborough/libcrypt) library. _Note that these methods return pre-allocated blocks of memory, and it is up to the user of the method to free the memory after use (shown below)._
@@ -97,6 +78,30 @@ printf("%s\n", md5_text);
 
 free(md5_text);
 ```
+
+## Utilities
+
+### Base64 Converter
+
+Included in this library is a Base64 file converter utility, located in the file [`utils/b64.c`](https://github.com/caseyscarborough/libcrypt/blob/master/utils/b64.c). This utility will convert the contents of a file to or from Base64 encoded data.
+
+```bash
+# Build the executables
+make
+cd bin
+
+# Encode a file
+./b64 -e input.txt output.txt
+
+# Decode a file
+./b64 -e encoded.txt decoded.txt
+
+# Print the help menu
+./b64 -h
+```
+
+This file can then be copied to somewhere in your __PATH__ to be available from anywhere.
+
 ## Running the Tests
 
 Tests are written using the [Check](http://check.sourceforge.net/) unit testing framework. The tests are located at [`crypt-test.c`](https://github.com/caseyscarborough/libcrypt/blob/master/test/crypt-test.c), and can be compiled using `make test`. The check library [needs to be installed](http://check.sourceforge.net/web/install.html).
@@ -107,5 +112,5 @@ make test
 
 test/crypt-test
 # Running suite(s): Core
-# 100%: Checks: 5, Failures: 0, Errors: 0
+# 100%: Checks: 12, Failures: 0, Errors: 0
 ```
