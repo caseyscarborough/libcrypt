@@ -4,13 +4,13 @@ libcrypt is a simple library used for encryption, hashing, and encoding in C. It
 
 ## Using the Library
 
-To use the library, include the [`crypt.h`](https://github.com/caseyscarborough/libcrypt/blob/master/crypt.h) and [`crypt.c`](https://github.com/caseyscarborough/libcrypt/blob/master/crypt.c) files in your project. Then, include the [`crypt.h`](https://github.com/caseyscarborough/libcrypt/blob/master/crypt.h) file at the top of each file you'd like to use it's methods in. See [`test.c`](https://github.com/caseyscarborough/libcrypt/blob/master/test.c) for example usage.
+To use the library, include the [`crypt.h`](https://github.com/caseyscarborough/libcrypt/blob/master/src/crypt.h) and [`crypt.c`](https://github.com/caseyscarborough/libcrypt/blob/master/src/crypt.c) files in your project. Then, include the [`crypt.h`](https://github.com/caseyscarborough/libcrypt/blob/master/src/crypt.h) file at the top of each file you'd like to use it's methods in. See [`test.c`](https://github.com/caseyscarborough/libcrypt/blob/master/test/test.c) for example usage.
 
 To run the test file or the Base64 converter, run `make` from the project directory.
 
 ### Base64 Converter
 
-Included in this library is a Base64 file converter utility, located in the file [`b64.c`](https://github.com/caseyscarborough/libcrypt/blob/master/b64.c). This utility will convert the contents of a file to or from Base64 encoded data.
+Included in this library is a Base64 file converter utility, located in the file [`b64.c`](https://github.com/caseyscarborough/libcrypt/blob/master/utils/b64.c). This utility will convert the contents of a file to or from Base64 encoded data.
 
 ```bash
 # Build the executables
