@@ -87,20 +87,38 @@ Included in this library is a Base64 file converter utility, located in the file
 
 ```bash
 # Build the executables
-make
-cd bin
+$ make && cd bin
 
 # Encode a file
-./b64 -e input.txt output.txt
+$ ./b64 -e input.txt output.txt
 
 # Decode a file
-./b64 -e encoded.txt decoded.txt
+$ ./b64 -e encoded.txt decoded.txt
 
 # Print the help menu
-./b64 -h
+$ ./b64 -h
 ```
 
-This file can then be copied to somewhere in your __PATH__ to be available from anywhere.
+### MD5 Hasher
+
+The MD5 Hasher utility is located in the file [`utils/md5.c`](https://github.com/caseyscarborough/libcrypt/blob/master/utils/md5.c). This utility will MD5 hash the contents of a file or a string.
+
+```bash
+$ make && cd bin
+
+# Hash a string
+$ ./md5 -s "The quick brown fox jumps over the lazy dog."
+e4d909c290d0fb1ca068ffaddf22cbd0
+
+# Hash a file's contents
+$ ./md5 -f sample.txt
+322a166e1402bd9ff18e1ce67fe69e61  sample.txt
+
+# Print the help menu
+$ ./md5 -h
+```
+
+Either of these compiled utilities can then be copied to somewhere in your __PATH__ to be available from anywhere.
 
 ## Running the Tests
 
