@@ -71,10 +71,12 @@ int main(int argc, char **argv)
 {
     FILE *input_file, *output_file;
  
-    if (strncmp(argv[1], "-h", 2) == 0) {
+    if (argc < 4) {
         print_usage_menu();
-    } else if (argc != 4) {
+        return 1;
+    } else if (strncmp(argv[1], "-h", 2) == 0) {
         print_usage_menu();
+        return 0;
     } else if (strncmp(argv[1], "-d", 2) == 0 || strncmp(argv[1], "-e", 2) == 0) {
         char *input_filename = argv[2];
         char *output_filename = argv[3];
@@ -125,4 +127,5 @@ int main(int argc, char **argv)
         printf("Incorrect option '%s'\n", argv[1]);
         print_usage_menu();
     }
+    return 0;
 }
