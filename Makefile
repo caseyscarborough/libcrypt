@@ -4,6 +4,7 @@ SRC=src
 BIN=bin
 TESTS=test
 UTILS=utils
+INSTALL_DIR=/usr/local/bin
 
 all: mkdir test b64 md5
 
@@ -21,5 +22,9 @@ mkdir:
 
 clean:
 	rm -f $(BIN)/*
+
+install: md5 b64
+	cp $(BIN)/md5 $(INSTALL_DIR)/md5
+	cp $(BIN)/b64 $(INSTALL_DIR)/b64
 
 .PHONY: all test clean
