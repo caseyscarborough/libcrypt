@@ -1,4 +1,4 @@
-#include "crypt.h"
+#include "../src/crypt.h"
 
 int main(int argc, char *argv[])
 {

@@ -49,7 +49,7 @@
  *   THE SOFTWARE.
  */
 
-#include "crypt.h"
+#include "../src/crypt.h"
 #include <errno.h>
 
 void die(char *error)

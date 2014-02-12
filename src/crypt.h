@@ -7,9 +7,9 @@
 #include <string.h>
 #include <ctype.h>
 
-static char *base64_encoding_table = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+static const char *base64_encoding_table = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 static char *base64_decoding_table = NULL;
-static int base64_mod_table[3] = { 0, 2, 1 };
+static const int base64_mod_table[3] = { 0, 2, 1 };
 
 static const uint32_t md5_k[64] =
 {
