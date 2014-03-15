@@ -1,11 +1,12 @@
 #ifndef _CRYPT_H_
 #define _CRYPT_H_
 
-#include <stdio.h>
-#include <stdint.h>
-#include <stdlib.h>
-#include <string.h>
 #include <ctype.h>
+#include <stdlib.h>
+#include <stdint.h>
+#include <stdio.h>
+#include <string.h>
+#include <time.h>
 
 static const char *base64_encoding_table = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 static char *base64_decoding_table = NULL;
@@ -56,5 +57,10 @@ void md5_to_bytes(uint32_t val, uint8_t *bytes);
 uint32_t md5_to_int32(const uint8_t *bytes);
 char *md5_build_string(uint8_t *result);
 char *md5(const char *input);
+
+// UUID Methods
+unsigned char *generate_bytestream(size_t num_of_bytes);
+char *generate_uuid();
+
 
 #endif

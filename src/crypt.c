@@ -273,3 +273,55 @@ uint32_t md5_to_int32(const uint8_t *bytes)
     return ((uint32_t) bytes[0] << 0x00) | ((uint32_t) bytes[1] << 0x08) |
            ((uint32_t) bytes[2] << 0x10) | ((uint32_t) bytes[3] << 0x18) ;
 }
+
+/**
+ * This method returns a random byte string of a size passed in.
+ * It is up to the user of this method to free the memory allocated
+ * from it.
+ */
+unsigned char* generate_bytestream(size_t num_of_bytes)
+{
+    srand((unsigned int) time(NULL));
+    unsigned char *bytestream = malloc(num_of_bytes);
+    size_t i;
+
+    for (i = 0; i < num_of_bytes; i++) {
+        bytestream[i] = rand();
+    }
+
+    return bytestream;
+}
+
+/**
+ * This method generates a version 4 Universally Unique Identifier, which
+ * is randomly generated. See RFC 4122.
+ * It is up to the user of this method to free the memory allocated
+ * from it.
+ *
+ * For example:
+ *   char *uuid = generate_uuid();
+ *   printf("%s\n", uuid);
+ *   // Outputs 3586BD54-55C8-42D8-BE0E-74308A5B9D22
+ *   free(uuid);
+ */
+char *generate_uuid()
+{
+    unsigned char *stream = generate_bytestream(16);
+
+    // Set the first part of the seventh byte to 4
+    stream[6] = 0x40 | (stream[6] & 0xf);
+
+    // Set the first part of the ninth byte to either 8, 9, A, or B
+    stream[8] = 0x80 | (stream[8] & 0x3f);
+
+    char *uuid = malloc(37);
+    sprintf(uuid, "%02X%02X%02X%02X-%02X%02X-%02X%02X-%02X%02X-%02X%02X%02X%02X%02X%02X",
+        stream[0], stream[1], stream[2],  stream[3],  stream[4],  stream[5],  stream[6],  stream[7],
+        stream[8], stream[9], stream[10], stream[11], stream[12], stream[13], stream[14], stream[15]
+    );
+
+    free(stream);
+    
+    uuid[36] = '\0';
+    return uuid;
+}
