@@ -79,6 +79,17 @@ printf("%s\n", md5_text);
 free(md5_text);
 ```
 
+#### generate_uuid
+
+This method This method generates a version 4 [Universally Unique Identifier](http://en.wikipedia.org/wiki/Universally_unique_identifier#Version_4_.28random.29), which is randomly generated.
+
+```c
+char *uuid = generate_uuid();
+printf("%s\n", uuid);
+// Outputs 3586BD54-55C8-42D8-BE0E-74308A5B9D22
+free(uuid);
+```
+
 ## Utilities
 
 ### Base64 Converter
