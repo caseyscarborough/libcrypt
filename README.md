@@ -21,7 +21,7 @@ char *text = "The Quick Brown Fox Jumps Over The Lazy Dog.";
 char *rot13_encoded_text = rot13(text);
 
 printf("%s\n", rot13_encoded_text);
-// Outputs: ur Dhvpx Oebja Sbk Whzcf Bire Gur Ynml Qbt.
+// Outputs: Gur Dhvpx Oebja Sbk Whzcf Bire Gur Ynml Qbt.
 
 free(rot13_encoded_text);
 ```
@@ -87,6 +87,7 @@ This method This method generates a version 4 [Universally Unique Identifier](ht
 char *uuid = generate_uuid();
 printf("%s\n", uuid);
 // Outputs 3586BD54-55C8-42D8-BE0E-74308A5B9D22
+
 free(uuid);
 ```
 
