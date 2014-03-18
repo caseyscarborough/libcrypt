@@ -133,11 +133,21 @@ START_TEST(md5_hash_test_s2)
 }
 END_TEST
 
-START_TEST(generate_uuid_test)
+START_TEST(generate_uuid_test_1)
 {
 #line 69
   char *uuid = generate_uuid();
   ck_assert_int_eq((int)strlen(uuid), 36);
+  free(uuid);
+
+}
+END_TEST
+
+START_TEST(generate_uuid_test_2)
+{
+#line 74
+  char *uuid = generate_uuid();
+  ck_assert_int_eq((int)uuid[14], (int)'4');
   free(uuid);
 }
 END_TEST
@@ -162,7 +172,8 @@ int main(void)
     tcase_add_test(tc1_1, base64_decode_test_s2);
     tcase_add_test(tc1_1, md5_hash_test_s1);
     tcase_add_test(tc1_1, md5_hash_test_s2);
-    tcase_add_test(tc1_1, generate_uuid_test);
+    tcase_add_test(tc1_1, generate_uuid_test_1);
+    tcase_add_test(tc1_1, generate_uuid_test_2);
 
     srunner_run_all(sr, CK_ENV);
     nf = srunner_ntests_failed(sr);

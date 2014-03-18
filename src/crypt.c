@@ -13,7 +13,7 @@
  */
 char *rot13(const char *input)
 {
-    char *output = malloc(strlen(input) + 1);
+    char *output = malloc(sizeof(char) * (strlen(input) + 1));
     strcpy(output, input);
     for(int i = 0; output[i] != '\0'; i++) {
         if (isupper(output[i]))
@@ -37,7 +37,7 @@ char *rot13(const char *input)
  */
 char *rot47(const char *input)
 {
-    char *output = malloc(strlen(input) + 1);
+    char *output = malloc(sizeof(char) * (strlen(input) + 1));
     strcpy(output, input);
     for (int i = 0; output[i] != '\0'; i++) {
         if (output[i] > 32 && output[i] < 80) {
@@ -66,7 +66,7 @@ char *base64_encode(const char *input)
     size_t input_length = strlen(input);
     size_t output_length = 4 * ((input_length + 2) / 3);
 
-    char *encoded_data = malloc(output_length);
+    char *encoded_data = malloc(sizeof(char) * output_length);
     if (encoded_data == NULL) return NULL;
 
     for (int i = 0, j = 0; i < input_length;) {
@@ -107,7 +107,7 @@ char *base64_decode(const char *input)
     if (input[input_length - 1] == '=') (output_length)--;
     if (input[input_length - 2] == '=') (output_length)--;
 
-    char *decoded_data = malloc(output_length);
+    char *decoded_data = malloc(sizeof(char) * output_length);
     if (decoded_data == NULL) return NULL;
 
     for (int i = 0, j = 0; i < input_length;) {
@@ -133,7 +133,7 @@ char *base64_decode(const char *input)
 void base64_decoding_table_init()
 {
     if (base64_decoding_table == NULL) {
-        base64_decoding_table = malloc(123);
+        base64_decoding_table = malloc(sizeof(char) * 123);
         for (int i = 0; i < 64; i++) {
             base64_decoding_table[(int)base64_encoding_table[i]] = i;
         }
@@ -282,7 +282,7 @@ uint32_t md5_to_int32(const uint8_t *bytes)
 unsigned char* generate_bytestream(size_t num_of_bytes)
 {
     srand((unsigned int) time(NULL));
-    unsigned char *bytestream = malloc(num_of_bytes);
+    unsigned char *bytestream = malloc(sizeof(char) * num_of_bytes);
     size_t i;
 
     for (i = 0; i < num_of_bytes; i++) {
@@ -314,7 +314,7 @@ char *generate_uuid()
     // Set the first part of the ninth byte to either 8, 9, A, or B
     stream[8] = 0x80 | (stream[8] & 0x3f);
 
-    char *uuid = malloc(37);
+    char *uuid = malloc(sizeof(char) * 37);
     sprintf(uuid, "%02X%02X%02X%02X-%02X%02X-%02X%02X-%02X%02X-%02X%02X%02X%02X%02X%02X",
         stream[0], stream[1], stream[2],  stream[3],  stream[4],  stream[5],  stream[6],  stream[7],
         stream[8], stream[9], stream[10], stream[11], stream[12], stream[13], stream[14], stream[15]
