@@ -1,3 +1,45 @@
+/**
+ * libcrypt
+ *
+ * Copyright 2014 (c) Casey Scarborough
+ * https://github.com/caseyscarborough/libcrypt
+ *
+ * Description:
+ *
+ *   File: crypt.h
+ *
+ *   libcrypt is a simple and easy to use library for encryption, hashing,
+ *   ciphering, and UUID generation. It can be used in a project by including
+ *   the crypt.h file at the top of each file you'd like to use the library in,
+ *   and compiling the libcrypt files along with the project, like so:
+ *
+ *       gcc -Wall path/to/crypt.c project_file.c -o compiled_binary
+ *
+ *   For more information, see the project homepage at the following URL:
+ *
+ *       https://github.com/caseyscarborough/libcrypt
+ *
+ * License:
+ *
+ *   Permission is hereby granted, free of charge, to any person obtaining a copy
+ *   of this software and associated documentation files (the "Software"), to deal
+ *   in the Software without restriction, including without limitation the rights
+ *   to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ *   copies of the Software, and to permit persons to whom the Software is
+ *   furnished to do so, subject to the following conditions:
+ *   
+ *   The above copyright notice and this permission notice shall be included in
+ *   all copies or substantial portions of the Software.
+ *   
+ *   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ *   IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ *   FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ *   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ *   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ *   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ *   THE SOFTWARE.
+ */
+
 #ifndef _CRYPT_H_
 #define _CRYPT_H_
 
